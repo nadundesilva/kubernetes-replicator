@@ -38,18 +38,6 @@ type ReplicationReconciler struct {
 	Replicator replication.Replicator
 }
 
-//+kubebuilder:rbac:groups="",resources=secrets,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups="",resources=secrets/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups="",resources=secrets/finalizers,verbs=update
-
-//+kubebuilder:rbac:groups="",resources=configmaps,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups="",resources=configmaps/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups="",resources=configmaps/finalizers,verbs=update
-
-//+kubebuilder:rbac:groups="networking.k8s.io",resources=networkpolicies,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups="networking.k8s.io",resources=networkpolicies/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups="networking.k8s.io",resources=networkpolicies/finalizers,verbs=update
-
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
 func (r *ReplicationReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
@@ -209,7 +197,7 @@ func (r *ReplicationReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		return controllerutil.ContainsFinalizer(object, resourceFinalizer)
 	})
 
-	name := "replicator-namespaced-resource-controller"
+	name := "k8s-replicator-namespaced-resource-controller"
 	r.recorder = mgr.GetEventRecorderFor(name)
 	if r.Client == nil {
 		r.Client = mgr.GetClient()

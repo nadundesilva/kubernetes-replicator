@@ -112,7 +112,7 @@ test: test.unit test.e2e test.benchmark
 
 .PHONY: test.unit
 test.unit: manifests generate envtest
-	KUBEBUILDER_ASSETS="$(shell $(ENVTEST) use $(ENVTEST_K8S_VERSION) --bin-dir $(LOCALBIN) -p path)" go test ./controllers/... -coverprofile cover.out
+	DISABLE_VALIDATIONS=true KUBEBUILDER_ASSETS="$(shell $(ENVTEST) use $(ENVTEST_K8S_VERSION) --bin-dir $(LOCALBIN) -p path)" go test ./controllers/... -coverprofile cover.out
 
 .PHONY: test.e2e
 test.e2e:
@@ -132,7 +132,7 @@ build: manifests generate fmt vet ## Build manager binary.
 
 .PHONY: run
 run: manifests generate fmt vet ## Run a controller from your host.
-	go run ./main.go -zap-devel -zap-log-level=100
+	DISABLE_VALIDATIONS=true go run ./main.go -zap-devel -zap-log-level=100
 
 # If you wish built the manager image targeting other platforms you can use the --platform flag.
 # (i.e. docker build --platform linux/arm64 ). However, you must enable docker buildKit for it.
