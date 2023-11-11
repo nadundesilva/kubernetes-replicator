@@ -44,10 +44,10 @@ var (
 	scheme      = runtime.NewScheme()
 	setupLog    = ctrl.Log.WithName("setup")
 
-	disableValidations = func() bool {
-		envVal := os.Getenv("DISABLE_VALIDATIONS")
-		isDisabled, err := strconv.ParseBool(envVal)
-		return err == nil && isDisabled
+	enableWebhooks = func() bool {
+		envVal := os.Getenv("ENABLE_WEBHOOKS")
+		isEnabled, err := strconv.ParseBool(envVal)
+		return err != nil || isEnabled
 	}()
 )
 
@@ -112,7 +112,7 @@ func main() {
 			os.Exit(1)
 		}
 
-		if !disableValidations {
+		if enableWebhooks {
 			validator := controllers.NewValidator(
 				replicator,
 				mgr.GetClient(),
