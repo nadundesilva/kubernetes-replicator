@@ -60,6 +60,8 @@ jobs:
                     echo "There are new changes after the code format. Please run 'make fmt' and commit the changes"
                     exit 1
                   fi
+            - name: Lint Code
+              run: make lint
 
     validate-bundle:
         name: Run Operator Bundle Validator

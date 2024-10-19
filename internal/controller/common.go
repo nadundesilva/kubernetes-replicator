@@ -18,7 +18,7 @@ import (
 	"strings"
 
 	"github.com/go-logr/logr"
-	"github.com/nadundesilva/k8s-replicator/controllers/replication"
+	"github.com/nadundesilva/k8s-replicator/internal/controller/replication"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -96,7 +96,10 @@ func replicateObject(ctx context.Context, k8sClient client.Client, eventRecorder
 		eventRecorder.Eventf(sourceObject, "Normal", SourceObjectUpdate, "replica in namespace %s updated", ns)
 	}
 
-	addFinalizer(ctx, k8sClient, clonedObject)
+	err = addFinalizer(ctx, k8sClient, clonedObject)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
