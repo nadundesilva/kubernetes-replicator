@@ -26,9 +26,9 @@ jobs:
               with:
                   fetch-depth: 0
             - name: Setup GoLang
-              uses: actions/setup-go@v4
+              uses: actions/setup-go@v5
               with:
-                  go-version: "^1.21"
+                  go-version: "1.22.2"
             - name: Generate code
               run: make generate manifests
             - name: Check for changes
@@ -48,11 +48,13 @@ jobs:
               with:
                   fetch-depth: 0
             - name: Setup GoLang
-              uses: actions/setup-go@v4
+              uses: actions/setup-go@v5
               with:
-                  go-version: "^1.21"
+                  go-version: "1.22.2"
             - name: Vet Code
               run: make vet
+            - name: Lint Code
+              run: make lint
             - name: Check Code Format
               run: |
                   make fmt
@@ -60,15 +62,13 @@ jobs:
                     echo "There are new changes after the code format. Please run 'make fmt' and commit the changes"
                     exit 1
                   fi
-            - name: Lint Code
-              run: make lint
 
     validate-bundle:
         name: Run Operator Bundle Validator
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               with:
                   fetch-depth: 0
             - name: Validate Bundle
@@ -87,7 +87,7 @@ jobs:
               with:
                   fetch-depth: 0
             - name: Lint Code Base
-              uses: github/super-linter@v4
+              uses: super-linter/super-linter@v7
               env:
                   DEFAULT_BRANCH: main
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -109,13 +109,13 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
             - name: Initialize CodeQL
-              uses: github/codeql-action/init@v2
+              uses: github/codeql-action/init@v3
               with:
                   languages: go
             - name: Autobuild
-              uses: github/codeql-action/autobuild@v2
+              uses: github/codeql-action/autobuild@v3
             - name: Perform CodeQL Analysis
-              uses: github/codeql-action/analyze@v2
+              uses: github/codeql-action/analyze@v3
 
     run-unit-tests:
         name: Run Unit Tests
@@ -126,9 +126,9 @@ jobs:
               with:
                   fetch-depth: 0
             - name: Setup GoLang
-              uses: actions/setup-go@v4
+              uses: actions/setup-go@v5
               with:
-                  go-version: "^1.21"
+                  go-version: "1.22.2"
             - name: Run Unit Tests
               run: make test.unit
 
@@ -143,9 +143,9 @@ jobs:
               with:
                   fetch-depth: 0
             - name: Setup GoLang
-              uses: actions/setup-go@v4
+              uses: actions/setup-go@v5
               with:
-                  go-version: "^1.21"
+                  go-version: "1.22.2"
             - name: Run Benchmark Tests
               run: make test.benchmark
               env:
@@ -172,9 +172,9 @@ jobs:
               with:
                   fetch-depth: 0
             - name: Setup GoLang
-              uses: actions/setup-go@v4
+              uses: actions/setup-go@v5
               with:
-                  go-version: "^1.21"
+                  go-version: "1.22.2"
             - name: Run E2E Tests
               run: make test.e2e
               env:
@@ -194,9 +194,9 @@ jobs:
               with:
                   fetch-depth: 0
             - name: Setup GoLang
-              uses: actions/setup-go@v4
+              uses: actions/setup-go@v5
               with:
-                  go-version: "^1.21"
+                  go-version: "1.22.2"
             - name: Setup Kind
               run: |
                 go get sigs.k8s.io/kind
@@ -250,9 +250,9 @@ jobs:
               with:
                   fetch-depth: 0
             - name: Setup GoLang
-              uses: actions/setup-go@v4
+              uses: actions/setup-go@v5
               with:
-                  go-version: "^1.21"
+                  go-version: "1.22.2"
             - name: Generate code
               run: make generate manifests bundle
               env:
@@ -319,7 +319,7 @@ jobs:
             - build-operator
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               with:
                   fetch-depth: 0
             - name: Validate Bundle
