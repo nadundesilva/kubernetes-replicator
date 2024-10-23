@@ -28,7 +28,7 @@ jobs:
             - name: Setup GoLang
               uses: actions/setup-go@v5
               with:
-                  go-version: "1.22.2"
+                  go-version: "1.23.2"
             - name: Generate code
               run: make generate manifests
             - name: Check for changes
@@ -50,7 +50,7 @@ jobs:
             - name: Setup GoLang
               uses: actions/setup-go@v5
               with:
-                  go-version: "1.22.2"
+                  go-version: "1.23.2"
             - name: Vet Code
               run: make vet
             - name: Lint Code
@@ -132,7 +132,7 @@ jobs:
             - name: Setup GoLang
               uses: actions/setup-go@v5
               with:
-                  go-version: "1.22.2"
+                  go-version: "1.23.2"
             - name: Run Unit Tests
               run: make test.unit
 
@@ -149,7 +149,7 @@ jobs:
             - name: Setup GoLang
               uses: actions/setup-go@v5
               with:
-                  go-version: "1.22.2"
+                  go-version: "1.23.2"
             - name: Run Benchmark Tests
               run: make test.benchmark
               env:
@@ -178,7 +178,7 @@ jobs:
             - name: Setup GoLang
               uses: actions/setup-go@v5
               with:
-                  go-version: "1.22.2"
+                  go-version: "1.23.2"
             - name: Run E2E Tests
               run: make test.e2e
               env:
@@ -200,7 +200,7 @@ jobs:
             - name: Setup GoLang
               uses: actions/setup-go@v5
               with:
-                  go-version: "1.22.2"
+                  go-version: "1.23.2"
             - name: Setup Kind
               run: |
                 go get sigs.k8s.io/kind
@@ -256,7 +256,7 @@ jobs:
             - name: Setup GoLang
               uses: actions/setup-go@v5
               with:
-                  go-version: "1.22.2"
+                  go-version: "1.23.2"
             - name: Sanitize Docker Image Tag
               env:
                   BRANCH_NAME: ${{ inputs.docker-image-tag }}
